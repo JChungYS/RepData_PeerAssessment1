@@ -9,13 +9,47 @@ output:
 ## Loading and preprocessing the data
 
 
+rawDAct <- read.csv("activity.csv")
+
+DAct <- na.omit(rawDAct) ### remove na data
 
 ## What is mean total number of steps taken per day?
 
+StepsDayMean <-aggregate(DAct$steps, 
+                list(day = DAct$date),
+                mean)
+####Output Mean
+print(StepsDayMean)
 
+## What is median total number of steps taken per day?
+StepsDayMedian <-aggregate(DAct$steps, 
+                list(day = DAct$date),
+                FUN = median)
+                
+####Output Median
+
+print(StepsDayMedian)
+
+
+### Plot histogram of steps-day
+
+StepsDaySum <-aggregate(DAct$steps, 
+                list(day = DAct$date),
+                sum)
+
+hist(StepsDaySum$x, main = "Historgram of Steps per day")
 
 ## What is the average daily activity pattern?
 
+plot(StepsDayAvg$day,StepsDayAvg$x, type = "l",  main = "Average Daily Activity Pattern")
+
+####Max Steps
+MaxStepsIn5Min <- max(DAct$steps)
+
+MaxStepInterval<- DAct$interval[DAct$steps==MaxStepsIn5Min]
+DayOfMaxStepInterval <- round(615/12/24)
+
+print(MaxStepsIn5Min)
 
 
 ## Imputing missing values

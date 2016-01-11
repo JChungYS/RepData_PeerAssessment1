@@ -38,8 +38,6 @@ StepsDayMedian <-aggregate(DAct$steps,
 ```
 
 
-
-                
 ####Output Median
 ```{r}
 print(StepsDayMedian)
@@ -86,6 +84,54 @@ print(MaxStepsIn5Min)
 
 
 ## Imputing missing values
+
+###The number of incomplete cases is
+```{r}
+print(nrow(rawDAct)-nrow(DAct))
+
+```
+
+####Strategy 1 replacing NA with mean
+```{r}
+
+for(i in 1:nrow(rawDAct)){
+  newDAct[is.na(rawDAct[i,]), i] <- mean(rawDAct[i,], na.rm = TRUE)
+}
+```
+###newDACT Daily Average Histogram
+```{r}
+
+
+newStepsDaySum <-aggregate(newDAct$steps, 
+                list(day = newDAct$date),
+                sum)
+
+hist(newStepsDaySum$x, main = "Historgram of Steps of per day(imputed data)")
+
+
+```
+###Calucluate and report the mean and media for 
+
+
+
+
+
+####Mean
+```{r}
+print(mean(newStepsDaySum$x))
+
+```
+
+####Media
+
+```{r}
+print(median(newStepsDaySum$x))
+```
+
+
+
+
+
 
 
 
